@@ -19,7 +19,7 @@
 			padding: 5px;
 		}
 		div div {
-			border: 1px solid black;
+			/*border: 1px solid black;*/
 			width: 167px;
 			height: 167px;
 			float: left;
@@ -34,24 +34,43 @@
 		.mole {
 			background-image: url("/img/mole.jpg");
 			/*background-color: red;*/
+			/*background-repeat: none;*/
 		}
 		img {
 			padding-top: 20px;
 		}
-		#timer {
+		/*#timer {
 			margin-right: auto;
 			margin-left: auto;
 			text-align: center;
+		}*/
+		body {
+			background-image: url("/img/caddyshack.jpg")
 		}
+		.board {
+			float: left;
+		}
+		button {
+			padding: 25px;
+			font-size: 25px;
+		}
+		.board {
+			color: green;
+			background-color: white;
+		}
+
 	</style>
 
 
 <script type="text/javascript">
 
 $('document').ready(function() {
-	var timer = 12;
-	// moleArray = [];
-	// hitsArray = [];
+	
+// $('#start').click(function() {
+
+	var timer = 11;
+	var score = 0;
+	
 
 	function randomTile(){
 		var random = Math.floor(Math.random()*9);
@@ -66,23 +85,32 @@ $('document').ready(function() {
 		setTimeout(function(){
 		$(mole).removeClass('mole');
 		}, 1000);
+
+		// $('#timer').html(timer);
+
 	};
 	
 	var interval = setInterval(function(){
-		if(timer > 1) {
+		if(timer > 0) {
 			animate();
 			timer--;
 			console.log(timer);
-			$('#timer').html(timer)
+			$('#timer').html('Timer: ' + timer);
+			$('#score').html('Score: ' + score);
 		} else {
 			clearInterval(interval);
 			alert('Game over');
+			score = 0;
+			$('score').html('Score: ' + score);
 		}	
-	} , 1300);	
+	} , 1600);	
 
 	$('.box').on('click', function(){
-		console.log($(this));
-		console.log($(this).attr('class'));
+		// console.log($(this));
+		// console.log($(this).attr('class'));
+
+			score++;
+			// $('#score').html('Score: ' + score);
 
 		if($(this).attr('class') == 'box mole'){
 			$(this).removeClass('mole');
@@ -91,11 +119,15 @@ $('document').ready(function() {
 		else {
 			clearInterval(interval);
 			timer = 0;	
-			alert('Oops, you hit the wrong one!');
-			$('#timer').html(timer);
+			score = 0;
+			alert('Oops, you hit the wrong one - GAME OVER!');
+			$('#timer').html('Timer: ' + timer);
+			$('#score').html('Score: ' + score);
 		}
-		
 	})
+// });
+
+// 	$('#start')
 
 });
 
@@ -146,8 +178,17 @@ $('document').ready(function() {
 </head>
 
 <body>
-<h1>Güac the Mole!</h1>
-<h2 id='timer'>Timer</h2>
+	<br>
+	<br>
+	<br>
+
+	<div class="board">
+		<h1>Güac the Mole!</h1>
+		<h2 id='timer'>Timer: 0</h2>
+		<h2 id="score">Score: 0</h2>
+		<button id='start'>Start!</button>
+	</div>
+
 	<div class="container">
 		<div class="box" id='box1'></div>
 		<div class="box" id='box2'></div>
@@ -161,6 +202,6 @@ $('document').ready(function() {
 		<div class="box" id='box8'></div>
 		<div class="box" id='box9'></div>
 	</div>
-	<button id='start'>Start!</button>
+
 </body>
 </html>
